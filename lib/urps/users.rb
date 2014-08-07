@@ -1,11 +1,14 @@
 module Arena
   class User
-    attr_reader :p1, :p2, :id, :created_at
+    attr_reader :username, :password_digest, :user_id, :created_at
 
-    def initialize(p1, p2, id=nil, created_at=nil)
-      @p1 = p1
-      @p2 = p2
+    def initialize(username, password_digest, user_id=nil, created_at=nil)
+      @username = username
+      @password_digest = Digest::SHA1.hexdigest(password)
+      @user_id = sesh.connection.create_user(@username,@password_digest)
     end
+  end
+end
 
     # def play(move1, move2)
     #   move1 = move1.downcase
@@ -35,6 +38,4 @@ module Arena
     #     puts "#{@p2} is teh winner!"
     #   end
     # end
-  end
-end
 

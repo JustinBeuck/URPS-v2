@@ -43,6 +43,11 @@ module Sesh
     def build_user(data)
       Sesh::User.new(data['username'], data['password_digest'])
     end
+
+    ############# CREATE MATCH ###############
+    def create_match(player1,player2)
+      @db.exec_params(%Q[ INSERT INTO matches (player1,player1_win_count,player2_win_count)
+      VALUES ($1,$2,$3) RETURNING id;], [player1,0,0])
   end
 
   def self.dbi
